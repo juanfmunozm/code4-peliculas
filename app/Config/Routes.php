@@ -20,6 +20,7 @@ $routes->set404Override();
 //$routes->get('/update/(:num)', 'Home::update/$1');
 
 $routes->presenter('pelicula');
+$routes->presenter('categoria');
 //$routes->get('pelicula','Pelicula::index');
 
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps

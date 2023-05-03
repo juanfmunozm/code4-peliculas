@@ -1,32 +1,43 @@
 <?php
 
-namespace App\Controllers;
-
+namespace App\Controllers\Dashboard;
+use App\Controllers\BaseController;
 use App\Models\CategoriaModel;
 
 class Categoria extends BaseController
 {
+
+    public function textRutaNombre()
+    {
+        echo "ruta nombre";
+    }
+
     public function index()
     {
+        session()->set('user','usernombre');
         $categoriaModel = new CategoriaModel();
 
-        return view('/categoria/index',[
+        return view('/dashboard/categoria/index',[
             'categorias' => $categoriaModel->findAll()
+        ]);
+    }
+
+    public function show($id)
+    {
+
+        
+
+        $categoriaModel= new CategoriaModel();
+
+        return view('dashboard/categoria/show',[
+            'categoria' => $categoriaModel->find($id)
         ]);
     }
 
     public function new()
     {
-        return view('/categoria/new');
-    }
-
-    public function show($id)
-    {
-        $categoriaModel= new CategoriaModel();
-
-        return view('categoria/show',[
-            'categoria' => $categoriaModel->find($id)
-        ]);
+        //return redirect()->route('test');
+        return view('/dashboard/categoria/new');
     }
 
     public function create()
@@ -38,7 +49,7 @@ class Categoria extends BaseController
         ];*/
         // $this->request->getPost('titulo');
         $categoriaModel->insert($_POST);
-        echo "Creado!";
+        return redirect()->to('/dashboard/categoria')->with('mensaje','Creada!');
 
     }
 
@@ -46,7 +57,7 @@ class Categoria extends BaseController
     {
         $categoriaModel= new CategoriaModel();
 
-        return view('categoria/edit',[
+        return view('dashboard/categoria/edit',[
             'categoria' => $categoriaModel->find($id)
         ]);
         
@@ -58,14 +69,16 @@ class Categoria extends BaseController
         /*$this->request->getPost('titulo');
         $this->request->getPost('description');*/
         $categoriaModel->update($id,$_POST);
-        echo "Actualizado!";
+        return redirect()->to('/dashboard/categoria')->with('mensaje','Actualizada!');
     }
 
     public function delete($id)
     {
         $categoriaModel= new CategoriaModel();
         $categoriaModel->delete($id);
-        echo "Eliminado!";
+        session()->setFlashdata('mensaje','Eliminada!');
+        return redirect()->back();
+        //return redirect()->back()->with('mensaje','Eliminada!');
     }
 
 }

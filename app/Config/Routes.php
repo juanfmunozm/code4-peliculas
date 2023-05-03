@@ -16,12 +16,28 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 
-//$routes->get('/', 'Home::index');
+$routes->get('/', 'Dashboard\Home::index');
 //$routes->get('/update/(:num)', 'Home::update/$1');
-
-$routes->presenter('pelicula');
-$routes->presenter('categoria');
 //$routes->get('pelicula','Pelicula::index');
+
+$routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'] , function($routes)
+{
+    $routes->presenter('pelicula');
+    $routes->presenter('categoria',['except' => 'show']);
+});
+
+
+/*$routes->group('dashboard', function($routes)
+{
+    $routes->presenter('pelicula',['controller' => 'Dashboard\Pelicula']);
+    //$routes->presenter('categoria',['only' => ['index']]);
+    //$routes->resource('categoria',['except' => ['show']]); // Para API REST
+    $routes->presenter('categoria',['except' => ['show'], 'controller' => 'Dashboard\Categoria']);
+    $routes->get('textRutaNombre/(:num)','Categoria::textRutaNombre/$1',['as' => 'test']);
+});*/
+
+
+
 
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.

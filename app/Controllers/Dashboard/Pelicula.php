@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Dashboard;
 
+use App\Controllers\BaseController;
 use App\Models\PeliculaModel;
 
 class Pelicula extends BaseController
@@ -10,21 +11,21 @@ class Pelicula extends BaseController
     {
         $peliculaModel = new PeliculaModel();
 
-        return view('/pelicula/index',[
+        return view('/dashboard/pelicula/index',[
             'peliculas' => $peliculaModel->findAll()
         ]);
     }
 
     public function new()
-    {
-        return view('/pelicula/new');
+    {        
+        return view('/dashboard/pelicula/new');
     }
 
     public function show($id)
     {
         $peliculaModel = new PeliculaModel();
 
-        return view('pelicula/show',[
+        return view('/dashboard/pelicula/show',[
             'pelicula' => $peliculaModel->find($id)
         ]);
     }
@@ -38,7 +39,8 @@ class Pelicula extends BaseController
         ];*/
         // $this->request->getPost('titulo');
         $peliculaModel->insert($_POST);
-        echo "Creado!";
+        session()->setFlashdata('mensaje','Creada!');
+        return redirect()->to('/dashboard/pelicula');
 
     }
 
@@ -46,7 +48,7 @@ class Pelicula extends BaseController
     {
         $peliculaModel = new PeliculaModel();
 
-        return view('pelicula/edit',[
+        return view('/dashboard/pelicula/edit',[
             'pelicula' => $peliculaModel->find($id)
         ]);
         
@@ -58,14 +60,19 @@ class Pelicula extends BaseController
         /*$this->request->getPost('titulo');
         $this->request->getPost('description');*/
         $peliculaModel->update($id,$_POST);
-        echo "Actualizado!";
+        
+        //return redirect()->back();
+        session()->setFlashdata('mensaje','Actualizada!');
+        return redirect()->to('/dashboard/pelicula');
+        
     }
 
     public function delete($id)
     {
         $peliculaModel = new PeliculaModel();
         $peliculaModel->delete($id);
-        echo "Eliminado!";
+        session()->setFlashdata('mensaje','Eliminada!');
+        return redirect()->back();
     }
 
 }

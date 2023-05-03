@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Dashboard;
+use App\Controllers\BaseController;
 
 class Home extends BaseController
 {
@@ -13,6 +14,6 @@ class Home extends BaseController
     {
 
     
-    }
+    }    
 
 }

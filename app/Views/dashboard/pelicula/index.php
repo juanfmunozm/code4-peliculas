@@ -9,9 +9,10 @@
 
 </head>
 <body>
+    <?= view('partials/_session') ?>
     <h1>Listado de Pelliculas</h1>
     <div>
-    <a href="/pelicula/new/">Crear</a>
+    <a href="/dashboard/pelicula/new/">Crear</a>
     <?php if (isset($peliculas)): ?>
         
        <table>
@@ -25,10 +26,10 @@
                     <td><?= $value['titulo'] ?></td>
                     <td><?= $value['description'] ?></td>
                     <td>
-                        <a href="/pelicula/show/<?= $value['id'] ?>">Show</a>
-                        <a href="/pelicula/edit/<?= $value['id'] ?>">Edit</a>
+                        <a href="/dashboard/pelicula/show/<?= $value['id'] ?>">Show</a>
+                        <a href="/dashboard/pelicula/edit/<?= $value['id'] ?>">Edit</a>
 
-                        <form action="/pelicula/delete/<?= $value['id'] ?>" method="post">
+                        <form action="/dashboard/pelicula/delete/<?= $value['id'] ?>" method="post">
                             <button type="submit">Eliminar</button>
                         </form>
                        

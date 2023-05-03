@@ -9,9 +9,12 @@
 
 </head>
 <body>
+    <?= view('partials/_session') ?>
+    <?= session('user') ?>
     <h1>Listado de Categorias</h1>
     <div>
-    <a href="/categoria/new/">Crear</a>
+    <a href="<?= route_to('test',1); ?>">Test RouteName</a>    
+    <a href="/dashboard/categoria/new/">Crear</a>
     <?php if (isset($categorias)): ?>
         
        <table>
@@ -23,10 +26,10 @@
                 <tr>
                     <td><?= $value['titulo'] ?></td>
                     <td>
-                        <a href="/categoria/show/<?= $value['id'] ?>">Show</a>
-                        <a href="/categoria/edit/<?= $value['id'] ?>">Edit</a>
+                        <a href="/dashboard/categoria/show/<?= $value['id'] ?>">Show</a>
+                        <a href="/dashboard/categoria/edit/<?= $value['id'] ?>">Edit</a>
 
-                        <form action="/categoria/delete/<?= $value['id'] ?>" method="post">
+                        <form action="/dashboard/categoria/delete/<?= $value['id'] ?>" method="post">
                             <button type="submit">Eliminar</button>
                         </form>
                        

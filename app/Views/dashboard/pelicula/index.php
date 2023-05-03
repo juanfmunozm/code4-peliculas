@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to CodeIgniter 4!</title>
-    <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+<?= $this->extend('Layouts/dashboard')?>    
 
-</head>
-<body>
-    <?= view('partials/_session') ?>
-    <h1>Listado de Pelliculas</h1>
+<?= $this->section('contenido') ?>   
+
+    <h1>Listado de Peliculas</h1>
     <div>
     <a href="/dashboard/pelicula/new/">Crear</a>
     <?php if (isset($peliculas)): ?>
@@ -40,13 +32,6 @@
     <?php endif ?>
             
 
-        
-
-    
-    
-
     </div>
 
-
-</body>
-</html>
+    <?= $this->endSection() ?>  

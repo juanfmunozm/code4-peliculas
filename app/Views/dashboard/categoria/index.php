@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Categorias</title>
-    <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+<?= $this->extend('Layouts/dashboard')?>    
 
-</head>
-<body>
-    <?= view('partials/_session') ?>
-    <?= session('user') ?>
-    <h1>Listado de Categorias</h1>
+<?= $this->section('contenido') ?>    
+<h1>Listado de Categorias</h1>
     <div>
     <a href="<?= route_to('test',1); ?>">Test RouteName</a>    
     <a href="/dashboard/categoria/new/">Crear</a>
@@ -38,15 +28,4 @@
             <?php endforeach ?>
         </table>
     <?php endif ?>
-            
-
-        
-
-    
-    
-
-    </div>
-
-
-</body>
-</html>
+<?= $this->endSection() ?>   

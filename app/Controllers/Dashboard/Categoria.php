@@ -43,13 +43,19 @@ class Categoria extends BaseController
     public function create()
     {
         $categoriaModel= new CategoriaModel();
-        /*$data = [
-            'titulo' => $_POST['titulo'],
-            'description'    => $_POST['description'],
-        ];*/
-        // $this->request->getPost('titulo');
-        $categoriaModel->insert($_POST);
-        return redirect()->to('/dashboard/categoria')->with('mensaje','Creada!');
+        if($this->validate('categorias')){
+            /*$data = [
+                'titulo' => $_POST['titulo'],
+                'description'    => $_POST['description'],
+            ];*/
+            // $this->request->getPost('titulo');
+            $categoriaModel->insert($_POST);
+            return redirect()->to('/dashboard/categoria')->with('mensaje','Creada!');
+        }
+        else{
+            session()->setFlashdata('errorValidation',$this->validator->listErrors());
+            return redirect()->back()->withInput();
+        }
 
     }
 
@@ -66,10 +72,16 @@ class Categoria extends BaseController
     public function update($id)
     {
         $categoriaModel= new CategoriaModel();
-        /*$this->request->getPost('titulo');
-        $this->request->getPost('description');*/
-        $categoriaModel->update($id,$_POST);
-        return redirect()->to('/dashboard/categoria')->with('mensaje','Actualizada!');
+        if($this->validate('categorias')){
+            /*$this->request->getPost('titulo');
+            $this->request->getPost('description');*/
+            $categoriaModel->update($id,$_POST);
+            return redirect()->to('/dashboard/categoria')->with('mensaje','Actualizada!');
+        }
+        else{
+            session()->setFlashdata('errorValidation',$this->validator->listErrors());
+            return redirect()->back()->withInput();
+        }
     }
 
     public function delete($id)

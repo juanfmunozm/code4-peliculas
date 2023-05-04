@@ -9,6 +9,7 @@
 
 <body>
     <?= view('partials/_session') ?>
+    <?= view('partials/_form-error') ?>
     
     <?= $this->renderSection('contenido') ?>
 </body>

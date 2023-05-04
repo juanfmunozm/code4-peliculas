@@ -33,14 +33,21 @@ class Pelicula extends BaseController
     public function create()
     {
         $peliculaModel = new PeliculaModel();
-        /*$data = [
-            'titulo' => $_POST['titulo'],
-            'description'    => $_POST['description'],
-        ];*/
-        // $this->request->getPost('titulo');
-        $peliculaModel->insert($_POST);
-        session()->setFlashdata('mensaje','Creada!');
-        return redirect()->to('/dashboard/pelicula');
+        if($this->validate('peliculas')){
+            /*$data = [
+                'titulo' => $_POST['titulo'],
+                'description'    => $_POST['description'],
+            ];*/
+            // $this->request->getPost('titulo');
+            $peliculaModel->insert($_POST);
+            session()->setFlashdata('mensaje','Creada!');
+            return redirect()->to('/dashboard/pelicula');
+        }
+        else{
+            session()->setFlashdata('errorValidation',$this->validator->listErrors());
+            return redirect()->back()->withInput();
+        }
+
 
     }
 
@@ -57,13 +64,26 @@ class Pelicula extends BaseController
     public function update($id)
     {
         $peliculaModel = new PeliculaModel();
-        /*$this->request->getPost('titulo');
-        $this->request->getPost('description');*/
-        $peliculaModel->update($id,$_POST);
+
+       if($this->validate('peliculas')){
+
+            /*$this->request->getPost('titulo');
+            $this->request->getPost('description');*/
+            $peliculaModel->update($id,$_POST);
+            
+            //return redirect()->back();
+            session()->setFlashdata('mensaje','Actualizada!');
+            return redirect()->to('/dashboard/pelicula');
+            
+        }
+        else{
+            session()->setFlashdata('errorValidation',$this->validator->listErrors());
+            return redirect()->back()->withInput();;
+        }
+
         
-        //return redirect()->back();
-        session()->setFlashdata('mensaje','Actualizada!');
-        return redirect()->to('/dashboard/pelicula');
+            
+              
         
     }
 

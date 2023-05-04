@@ -11,18 +11,11 @@
 <body>
     <h1>Categoria</h1>
     <div>
-    <?php if (isset($categoria)): ?>
-        
-      <?= $categoria['titulo'] ?>
-        
-    <?php endif ?>
-            
-
-        
-
-    
-    
-
+      <?php if (isset($categoria)): ?>
+          
+        <?= $categoria->titulo ?>
+          
+      <?php endif ?>            
     </div>
 
 

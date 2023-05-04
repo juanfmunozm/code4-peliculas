@@ -6,7 +6,7 @@
     <div>
       <?php if (isset($pelicula)): ?>
           
-        <?= $pelicula['titulo']." ".$pelicula['description'] ?>
+        <?= $pelicula->titulo." ".$pelicula->description ?>
           
       <?php endif ?>            
     </div>

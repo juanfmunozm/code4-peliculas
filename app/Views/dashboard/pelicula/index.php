@@ -15,13 +15,13 @@
         </tr>
         <?php foreach($peliculas as $key => $value): ?>
                 <tr>
-                    <td><?= $value['titulo'] ?></td>
-                    <td><?= $value['description'] ?></td>
+                    <td><?= $value->titulo ?></td>
+                    <td><?= $value->description ?></td>
                     <td>
-                        <a href="/dashboard/pelicula/show/<?= $value['id'] ?>">Show</a>
-                        <a href="/dashboard/pelicula/edit/<?= $value['id'] ?>">Edit</a>
+                        <a href="/dashboard/pelicula/show/<?= $value->id ?>">Show</a>
+                        <a href="/dashboard/pelicula/edit/<?= $value->id ?>">Edit</a>
 
-                        <form action="/dashboard/pelicula/delete/<?= $value['id'] ?>" method="post">
+                        <form action="/dashboard/pelicula/delete/<?= $value->id ?>" method="post">
                             <button type="submit">Eliminar</button>
                         </form>
                        

@@ -20,22 +20,29 @@ $routes->get('/', 'Dashboard\Home::index');
 //$routes->get('/update/(:num)', 'Home::update/$1');
 //$routes->get('pelicula','Pelicula::index');
 
-$routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'] , function($routes)
+/*$routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'] , function($routes)
 {
     $routes->presenter('pelicula');
     $routes->presenter('categoria',['except' => 'show']);
+    $routes->get('usuario/crear','Usuario::create_user');
 });
+*/
 
-
-/*$routes->group('dashboard', function($routes)
+$routes->group('dashboard', function($routes)
 {
     $routes->presenter('pelicula',['controller' => 'Dashboard\Pelicula']);
+    $routes->get('usuario/crear','Web\Usuario::create_user');
     //$routes->presenter('categoria',['only' => ['index']]);
     //$routes->resource('categoria',['except' => ['show']]); // Para API REST
     $routes->presenter('categoria',['except' => ['show'], 'controller' => 'Dashboard\Categoria']);
     $routes->get('textRutaNombre/(:num)','Categoria::textRutaNombre/$1',['as' => 'test']);
-});*/
+});
 
+$routes->get('login','Web\Usuario::login',['as' => 'usuario.login']);
+$routes->post('login_post','Web\Usuario::login_post',['as' => 'usuario.login_post']);
+$routes->get('register','Web\Usuario::register',['as' => 'usuario.register']);
+$routes->post('register_post','Web\Usuario::register_post',['as' => 'usuario.register_post']);
+$routes->get('logout','Web\Usuario::logout',['as' => 'usuario.logout']);
 
 
 

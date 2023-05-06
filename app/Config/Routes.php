@@ -27,6 +27,11 @@ $routes->get('/', 'Dashboard\Home::index');
     $routes->get('usuario/crear','Usuario::create_user');
 });
 */
+$routes->group('api',['namespace' => 'App\Controllers\Api'], function($routes)
+{
+    $routes->resource('pelicula',['except' => ['edit']]);
+    $routes->resource('categoria',['except' => ['edit']]);
+});
 
 $routes->group('dashboard', function($routes)
 {
@@ -38,6 +43,7 @@ $routes->group('dashboard', function($routes)
     $routes->get('textRutaNombre/(:num)','Categoria::textRutaNombre/$1',['as' => 'test']);
 });
 
+//Rutas de Login y Registro
 $routes->get('login','Web\Usuario::login',['as' => 'usuario.login']);
 $routes->post('login_post','Web\Usuario::login_post',['as' => 'usuario.login_post']);
 $routes->get('register','Web\Usuario::register',['as' => 'usuario.register']);

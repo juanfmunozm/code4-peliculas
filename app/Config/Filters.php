@@ -9,6 +9,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use Exception;
 
 class Filters extends BaseConfig
 {
@@ -36,7 +37,7 @@ class Filters extends BaseConfig
             // 'invalidchars',
         ],
         'after' => [
-            'toolbar',
+            'toolbar' => ['except' => 'api/*'],
             // 'honeypot',
             // 'secureheaders',
         ],

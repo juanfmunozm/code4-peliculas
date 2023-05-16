@@ -35,12 +35,18 @@ $routes->group('api',['namespace' => 'App\Controllers\Api'], function($routes)
 
 $routes->group('dashboard', function($routes)
 {
+    $routes->get('pelicula/etiqueta/(:num)', 'Dashboard\Pelicula::etiquetas/$1',['as' => 'pelicula.etiquetas']);
+    $routes->post('pelicula/etiqueta/(:num)', 'Dashboard\Pelicula::etiquetas_post/$1',['as' => 'pelicula.etiquetas']);
+    $routes->post('pelicula/(:num)/etiqueta/(:num)/delete','Dashboard\Pelicula::etiqueta_delete/$1/$2',['as' => 'pelicula.etiqueta_delete']);
     $routes->presenter('pelicula',['controller' => 'Dashboard\Pelicula']);
+    $routes->presenter('etiqueta',['controller' => 'Dashboard\Etiqueta']);
     $routes->get('usuario/crear','Web\Usuario::create_user');
     //$routes->presenter('categoria',['only' => ['index']]);
-    //$routes->resource('categoria',['except' => ['show']]); // Para API REST
+    //$routes->resource('categoria',['except' => ['show']]); // Para API REST    
     $routes->presenter('categoria',['except' => ['show'], 'controller' => 'Dashboard\Categoria']);
     $routes->get('textRutaNombre/(:num)','Categoria::textRutaNombre/$1',['as' => 'test']);
+
+    
 });
 
 //Rutas de Login y Registro

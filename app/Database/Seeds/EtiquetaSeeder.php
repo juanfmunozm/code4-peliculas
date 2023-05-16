@@ -3,14 +3,18 @@
 namespace App\Database\Seeds;
 
 use App\Models\CategoriaModel;
+use App\Models\EtiquetaModel;
 use CodeIgniter\Database\Seeder;
 
-class PeliculaSeeder extends Seeder
+class EtiquetaSeeder extends Seeder
 {
     public function run()
     {
-        $this->db->table('peliculas')->truncate();
+        $etiquetaModel = new EtiquetaModel();
         $categoriaModel = new CategoriaModel();
+
+        $this->db->table('etiquetas')->truncate();
+        
 
         $categorias = $categoriaModel->find();
 
@@ -18,11 +22,11 @@ class PeliculaSeeder extends Seeder
         {
             $categoriaRandomIndex = array_rand($categorias);
 
-            $this->db->table('peliculas')->insert(
+            $this->db->table('etiquetas')->insert(
                 [
-                    'titulo' => "Pelicula Seeder $i",
+                    'titulo' => "TAG Pelicula Seeder $i",
                     'categoria_id' => $categorias[$categoriaRandomIndex]->id,
-                    'description' => "Pelicula Descripcion Seeder $i",                
+                    
                 ]
             );        
         }

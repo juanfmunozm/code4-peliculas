@@ -24,9 +24,6 @@ class Categoria extends BaseController
 
     public function show($id)
     {
-
-        
-
         $categoriaModel= new CategoriaModel();
 
         return view('dashboard/categoria/show',[

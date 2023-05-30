@@ -10,4 +10,10 @@
 
 <label for="description">Descripción</label>
 <textarea name="description" id="description"> <?= old('description',isset($pelicula->description) ? $pelicula->description : "") ?></textarea>
+
+<?php if($pelicula->id) : ?>
+    <label for="imagen">Imagen</label>
+    <input type="file" name="imagen" id="imagen">
+<?php endif; ?>
+
 <button type="submit"><?= $op ?></button>

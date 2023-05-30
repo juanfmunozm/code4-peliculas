@@ -9,6 +9,7 @@ use App\Models\ImagenModel;
 use App\Models\PeliculaEtiquetaModel;
 use App\Models\PeliculaImagenModel;
 use App\Models\PeliculaModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Pelicula extends BaseController
 {
@@ -84,6 +85,8 @@ class Pelicula extends BaseController
             /*$this->request->getPost('titulo');
             $this->request->getPost('description');*/
             $peliculaModel->update($id,$_POST);
+
+            $this->asignar_imagen($id);
             
             //return redirect()->back();
             session()->setFlashdata('mensaje','Actualizada!');
@@ -105,6 +108,78 @@ class Pelicula extends BaseController
         return redirect()->back();
     }
 
+    public function descargar_imagen($imagenId)
+    {
+        $imageModel = new ImagenModel();
+        $imagen = $imageModel->find($imagenId);
+        if($imagen == null){
+            return 'no existe imagen';
+        }
+        return $this->response->download('uploads/peliculas/'.$imagen->imagen,null)->setFileName('imagen'.$imagenId.'.jpg');
+    }
+
+    public function borrar_imagen($imagenId)
+    {
+        $imageModel = new ImagenModel();
+        $peliculaImagenModel = new PeliculaImagenModel();
+
+        //Borrar imagen en directorio
+        $imagen = $imageModel->find($imagenId);
+        if($imagen == null){
+            return 'no existe imagen';
+        }
+
+        $imageRuta = 'uploads/peliculas/'.$imagen->imagen;
+        unlink($imageRuta);
+
+        $peliculaImagenModel->where('imagen_id',$imagenId)->delete();
+        $imageModel->delete($imagenId);
+
+        return redirect()->back()->with('mensaje','Imagen eliminada');
+
+    }
+
+    private function asignar_imagen($peliculaId)
+    {
+        if($imagefile = $this->request->getFile('imagen'))
+        {
+            if($imagefile->isValid())
+            {
+                $validated = $this->validate([
+                    'uploaded[imagen]',
+                    'mime_in[imagen,image/jpg,image/jpeg,image,image/png]',
+                    'max_size[imagen,8000]'
+                ]);        
+
+                if($validated)
+                {
+                    $imageNombre = $imagefile->getRandomName();
+                    $ext = $imagefile->getExtension();
+                    //$imagefile->move(WRITEPATH . 'uploads/peliculas', $imageNombre);
+                    $imagefile->move('../public/uploads/peliculas', $imageNombre);
+                    $imagenModel = new ImagenModel();
+                    $imagenId = $imagenModel->insert(
+                        [
+                            'imagen' => $imageNombre,
+                            'extension' => $ext,
+                            'data'  => 'Pendiente'                
+                        ]
+                    );
+
+                    $peliculaImagenModel = new PeliculaImagenModel();
+                    $peliculaImagenModel->insert(
+                        [
+                            'pelicula_id' => $peliculaId,
+                            'imagen_id' => $imagenId                
+                        ]
+                    );                
+                }
+
+
+                return $this->validator->listErrors();
+            }            
+        }
+    }
     private function generar_imagen()
     {
         $imagenModel = new ImagenModel();
@@ -117,7 +192,7 @@ class Pelicula extends BaseController
         );
     }
 
-    private function asginar_imagen()
+    /*private function asginar_imagen()
     {
         $peliculaImagenModel = new PeliculaImagenModel();
         $peliculaImagenModel->insert(
@@ -126,7 +201,7 @@ class Pelicula extends BaseController
                 'imagen_id' => 5                
             ]
         );
-    }
+    }*/
 
     public function etiquetas($id)
     {
@@ -180,6 +255,28 @@ class Pelicula extends BaseController
         ->where('pelicula_id',$id)->delete();
         echo '{"mensaje" : "Etiqueta Eliminada"}';
         //return redirect()->back()->with('mensaje','Etiqueta Eliminada');
+    }
+
+    public function image($image)
+    {
+        if(!$image){
+            $image = $this->request->getGet('image');
+        }
+        $name = WRITEPATH . 'uploads/peliculas/' . $image;
+        if(!file_exists($name))
+        {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        $fp = fopen($name,'rb');
+
+        header("Content-Type: image/png");
+        header("Content-length: ". filesize($name));
+
+        fpassthru($fp);
+        exit;
+
+
     }
 
 }

@@ -37,6 +37,8 @@ $routes->group('dashboard', function($routes)
 {
     $routes->get('pelicula/etiqueta/(:num)', 'Dashboard\Pelicula::etiquetas/$1',['as' => 'pelicula.etiquetas']);
     $routes->post('pelicula/etiqueta/(:num)', 'Dashboard\Pelicula::etiquetas_post/$1',['as' => 'pelicula.etiquetas']);
+    $routes->post('pelicula/imagen_delete/(:num)', 'Dashboard\Pelicula::borrar_imagen/$1',['as' => 'pelicula.borrar_imagen']);
+    $routes->post('pelicula/imagen_download/(:num)', 'Dashboard\Pelicula::descargar_imagen/$1',['as' => 'pelicula.descargar_imagen']);
     $routes->post('pelicula/(:num)/etiqueta/(:num)/delete','Dashboard\Pelicula::etiqueta_delete/$1/$2',['as' => 'pelicula.etiqueta_delete']);
     $routes->presenter('pelicula',['controller' => 'Dashboard\Pelicula']);
     $routes->presenter('etiqueta',['controller' => 'Dashboard\Etiqueta']);
@@ -56,7 +58,8 @@ $routes->get('register','Web\Usuario::register',['as' => 'usuario.register']);
 $routes->post('register_post','Web\Usuario::register_post',['as' => 'usuario.register_post']);
 $routes->get('logout','Web\Usuario::logout',['as' => 'usuario.logout']);
 
-
+//imagen
+$routes->get('/image/(:any)', 'Dashboard\Pelicula::image/$1', ['as' => 'get_image']);
 
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.

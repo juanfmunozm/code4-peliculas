@@ -8,10 +8,18 @@
           
         <?= $pelicula->titulo." ".$pelicula->description ?>
           
-      <?php endif ?>  
+      <?php endif ?> 
+      <h3>Imágenes</h3>
       <ul>
         <?php foreach( $imagenes as $imagen): ?>
-          <li><?= $imagen->imagen ?></li>
+          <li><img src="/uploads/peliculas/<?= $imagen->imagen?>" width="200px">
+            <form action="<?= route_to('pelicula.borrar_imagen',$imagen->id) ?>" method="post">  
+              <button type="submit">Borrar</button>
+            </form>
+            <form action="<?= route_to('pelicula.descargar_imagen',$imagen->id) ?>" method="post">  
+              <button type="submit">Descargar</button>
+            </form>
+          </li>
         <?php endforeach; ?>  
       </ul> 
       <h3>Etiquetas</h3>

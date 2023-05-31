@@ -5,7 +5,11 @@
     <h1>Listado de Peliculas</h1>
     <div>
     <a href="/dashboard/pelicula/new/">Crear</a>
-    <?php if (isset($peliculas)): ?>
+    <?php
+
+use Config\Pager;
+
+ if (isset($peliculas)): ?>
         
        <table>
         <tr>
@@ -31,6 +35,7 @@
                 </tr>
             <?php endforeach ?>
         </table>
+        <?= $pager->links() ?>
     <?php endif ?>
             
 

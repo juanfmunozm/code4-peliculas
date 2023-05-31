@@ -19,7 +19,8 @@ class Pelicula extends BaseController
 
         $data = [
             'peliculas' => $peliculaModel->select('peliculas.*, categorias.titulo as categoria')
-                                        ->join('categorias','categorias.id = peliculas.categoria_id')->find()
+                                        ->join('categorias','categorias.id = peliculas.categoria_id')->paginate(3),
+            'pager' =>   $peliculaModel->pager                          
         ];
 
         return view('/dashboard/pelicula/index',$data);
@@ -141,6 +142,8 @@ class Pelicula extends BaseController
 
     private function asignar_imagen($peliculaId)
     {
+        helper('filesystem');
+
         if($imagefile = $this->request->getFile('imagen'))
         {
             if($imagefile->isValid())
@@ -162,7 +165,7 @@ class Pelicula extends BaseController
                         [
                             'imagen' => $imageNombre,
                             'extension' => $ext,
-                            'data'  => 'Pendiente'                
+                            'data'  => json_encode(get_file_info('../public/uploads/peliculas/'.$imageNombre))             
                         ]
                     );
 

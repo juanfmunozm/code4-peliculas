@@ -27,5 +27,6 @@
                 </tr>
             <?php endforeach ?>
         </table>
+        <?= $pager->links() ?>
     <?php endif ?>
 <?= $this->endSection() ?>   

@@ -14,10 +14,10 @@
         <?php foreach( $imagenes as $imagen): ?>
           <li><img src="/uploads/peliculas/<?= $imagen->imagen?>" width="200px">
             <form action="<?= route_to('pelicula.borrar_imagen',$imagen->id) ?>" method="post">  
-              <button type="submit">Borrar</button>
+              <button class="btn btn-primary btn-sm mb-1" type="submit">Borrar</button>
             </form>
             <form action="<?= route_to('pelicula.descargar_imagen',$imagen->id) ?>" method="post">  
-              <button type="submit">Descargar</button>
+              <button class="btn btn-primary btn-sm mb-1" type="submit">Descargar</button>
             </form>
           </li>
         <?php endforeach; ?>  

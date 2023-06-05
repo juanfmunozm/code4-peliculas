@@ -165,7 +165,7 @@ class Pelicula extends BaseController
                         [
                             'imagen' => $imageNombre,
                             'extension' => $ext,
-                            'data'  => json_encode(get_file_info('../public/uploads/peliculas/'.$imageNombre))             
+                            'data'  => json_encode(get_file_info('../public/uploads/peliculas'.$imageNombre))             
                         ]
                     );
 

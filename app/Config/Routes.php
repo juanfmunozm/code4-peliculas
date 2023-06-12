@@ -51,6 +51,16 @@ $routes->group('dashboard', function($routes)
     
 });
 
+//BLOG
+$routes->group('blog', function($routes)
+{
+    $routes->get('/', 'Blog\Pelicula::index',['as' => 'blog.pelicula.index']);   
+    $routes->get('(:num)','Blog\Pelicula::show/$1',['as' => 'blog.pelicula.show']);
+    $routes->get('etiquetas_por_categoria/(:num)','Blog\Pelicula::etiquetas_por_categoria/$1',['as' => 'blog.pelicula.etiquetas_por_categoria']);
+    $routes->get('peliculas_por_categoria/(:num)','Blog\Pelicula::peliculas_por_categoria/$1',['as' => 'blog.peliculas_por_categoria']);
+    $routes->get('peliculas_por_etiqueta/(:num)','Blog\Pelicula::peliculas_por_etiqueta/$1',['as' => 'blog.peliculas_por_etiqueta']);
+});
+
 //Rutas de Login y Registro
 $routes->get('login','Web\Usuario::login',['as' => 'usuario.login']);
 $routes->post('login_post','Web\Usuario::login_post',['as' => 'usuario.login_post']);

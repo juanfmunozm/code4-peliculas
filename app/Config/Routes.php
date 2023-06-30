@@ -29,7 +29,18 @@ $routes->get('/', 'Dashboard\Home::index');
 */
 $routes->group('api',['namespace' => 'App\Controllers\Api'], function($routes)
 {
+
+    $routes->post('pelicula/etiqueta/(:num)', 'Pelicula::etiquetas_post/$1');
+    $routes->delete('pelicula/(:num)/etiqueta/(:num)/delete','Pelicula::etiqueta_delete/$1/$2');
+    $routes->post('pelicula/(:num)/imagen','Pelicula::upload/$1');
+    $routes->delete('pelicula/imagen_delete/(:num)', 'Pelicula::borrar_imagen/$1');
+    $routes->get('pelicula/index_por_categoria/(:num)', 'Pelicula::index_por_categoria/$1');
+    $routes->get('pelicula/index_por_etiqueta/(:num)', 'Pelicula::index_por_etiqueta/$1');
+    $routes->get('pelicula/paginado', 'Pelicula::paginado');
+    $routes->get('pelicula/paginado_full', 'Pelicula::paginado_full');
     $routes->resource('pelicula',['except' => ['edit']]);
+
+    $routes->resource('etiqueta',['except' => ['edit']]);
     $routes->resource('categoria',['except' => ['edit']]);
 });
 
